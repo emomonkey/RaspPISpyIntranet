@@ -1,0 +1,23 @@
+{% from "_formhelpers.html" import render_field %}
+{% extends "base.html" %}
+
+{% block content %}
+<form method=post action="/setup">
+     <BR><BR>
+    {% for field in form %}
+    <div class="control-group">
+        {% if field.type == "HiddenField" %}
+           {{ field }}
+        {% else %}
+           {{ field.label }}
+           {{ field }}
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div class="control-group">
+        <input type="submit" value="Update">
+    </div>
+  </table>
+  
+</form>
+{% endblock %}

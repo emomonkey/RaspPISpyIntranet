@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+     
+    {% for res in recent %}
+      <div class="col-sm-6 col-md-4">
+       <div class="thumbnail"> 
+        <img src="{{ url_for('static', filename = '%s' % (res[0]))}}" width="160" height="90" alt="Not Found"/>
+        <div class="caption">
+          {{ res[1] }} 
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+
+<form class="form-inline" role="form" action="process" method="post">
+<div class="row-fluid">
+	<div span="10">
+	<div class="form-group">
+		<input type="date" class="form-control" placeholder="Date:" name="dtPhoto" value="{{dtvalue}}">	
+		<button class="btn btn-small btn-primary" type="submit" name="cmdBtn" value="fnd">Find</button>	
+	</div>
+	</div>
+		
+</div>
+<div class="row-fluid">
+	<div span="12">
+		<span class="label label-default">{{dtvalue}}</span>
+		<br>
+	</div>
+</div>
+<div class="row-fluid">
+<div span="10">
+{% for file in files %}
+
+<a href="{{ url_for('showimg', pname = detections, pfile = file)}}"><img src="{{ url_for('static', filename = '%s/%s' % (path,file))}}" width="80" height="45" alt="Link"/></a>
+
+{% endfor %}
+</div>
+
+</div>
+
+<table class="table table-condensed">
+ <tr class="success">
+    <td>Date Activity</td>
+    <td>Comment</td>
+  </tr>
+  {% for act in activities %}
+  	 <tr class="success">
+  	 	<td>{{ act[0] }} </td>
+  	 	<td>{{ act[1] }} </td>
+  	 </tr>
+  {% endfor %}
+</table>
+
+</form>
+
+
+
+{% endblock %}
