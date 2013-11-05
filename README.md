@@ -33,3 +33,6 @@ sudo pip install apscheduler
 sqlite3 will need to be installed as all the configuration is stored on the local sqlite database
 
 ![Screenshot](screenshots/Screenshot 2013-11-04 23.54.06.png)
+
+![Screenshot](screenshots/Screenshot 2013-11-05 00.19.30.png)
+
