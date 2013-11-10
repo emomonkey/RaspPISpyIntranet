@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>RaspPISpyIntranet</h1>
+    <p>Flask Python Application that integrates with a Webcam or Raspberry PI Camera. Camerashots can be trigger via a sensor or in autoshot</p>
+    
+  </div>
+</div>
+
+<div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Sensor Mode</h2>
+          <p>The application can be triggered by a PIR sensor that is connected to GPIO 17. If RaspSpyIntranet is in alarm mode a camerashot will be taken. The picture will also be emailed</p>
+        </div>
+        <div class="col-md-4">
+          <h2>Random Mode</h2>
+          <p>Photos can also be taken randomly.The frequency and times of these random shots can be figured. This is so random fun shots can be taken to keep a record. You can set an end time of when the random photos are taken. They can also be emailed out or deleted.</p>
+       </div>
+        <div class="col-md-4">
+          <h2>Configuring</h2>
+          <p>All the settings can be configured via the Setup screen. They are stored locally in a sqlite database. This screen is used to setup items such as email or the type of camera connected</p>
+         
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Stephen Emo 2013</p>
+      </footer>
+    </div>
+{% endblock %}

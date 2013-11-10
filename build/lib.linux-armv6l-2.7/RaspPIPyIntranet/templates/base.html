@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<header>
+		<meta charset="utf-8">
+		<title>RaspPISpyIntranet</title>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" />
+		
+			
+        <div class="centre">
+		<div class="menu">
+						<ul class="nav nav-pills">
+							{% for endpoint, submenu, smenu,caption in [
+								('show_entries','showimg','process' ,'Home'),
+								('setup','','' ,'Setup'),
+								('about','','','About RaspPISpyIntranet')
+							] %}
+  								<li{% if (endpoint == request.endpoint or submenu == request.endpoint or smenu == request.endpoint) %} class=active {% endif %}><a href="{{ url_for(endpoint) }}">{{ caption }} </a></li>
+  							{% endfor %}
+  							<li><img src="static/img/raspberry-pi-Header.jpg" alt="raspberry pi" class="img-rounded"/></li>
+		</ul>
+		</div>
+	    </div>
+		{% with messages = get_flashed_messages() %}
+  		{% if messages %}
+    	<ul class=flashes>
+    	{% for message in messages %}
+      		<li>{{ message }}</li>
+    	{% endfor %}
+    	</ul>
+ 		 {% endif %}
+		{% endwith %}
+	</header>	
+
+	<body>
+	  <div class="centre">
+  		<div class="row-fluid">
+    
+    	<div class="span10 offset2">
+					
+			
+				{% block content%} {% endblock%}
+		
+		
+			
+        
+        </div>
+        </div>
+	   </div>
+	
+	   {% block js_footer %}
+			<script src="static/js/bootstrap.js"></script>
+			<script src="static/js/jquery.js"></script>
+    	{% endblock %}	
+</body>
+		
+	
+</html>
