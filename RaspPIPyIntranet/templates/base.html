@@ -17,6 +17,7 @@
 							] %}
   								<li{% if (endpoint == request.endpoint or submenu == request.endpoint or smenu == request.endpoint) %} class=active {% endif %}><a href="{{ url_for(endpoint) }}">{{ caption }} </a></li>
   							{% endfor %}
+  							<li><img src="static/img/raspberry-pi-Header.jpg" alt="raspberry pi" class="img-rounded"/></li>
 		</ul>
 		</div>
 	    </div>

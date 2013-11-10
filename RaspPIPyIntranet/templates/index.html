@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  <h3 class="panel-title">Recent Comments on Photos</h3>
   <div class="container">
     <div class="row">
      
@@ -16,7 +19,9 @@
     {% endfor %}
   </div>
   </div>
+</div>
 
+<div class="panel-body">
 <form class="form-inline" role="form" action="process" method="post">
 <div class="row-fluid">
 	<div span="10">
@@ -43,15 +48,18 @@
 </div>
 
 </div>
-
+</div>
+</div>
 <table class="table table-condensed">
  <tr class="success">
     <td>Date Activity</td>
+    <td>Time Logged</td>
     <td>Comment</td>
   </tr>
   {% for act in activities %}
   	 <tr class="success">
   	 	<td>{{ act[0] }} </td>
+      <td>{{ act[2] }} </td>
   	 	<td>{{ act[1] }} </td>
   	 </tr>
   {% endfor %}
