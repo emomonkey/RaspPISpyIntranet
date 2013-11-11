@@ -1,0 +1,2 @@
+recursive-include RaspPIPyIntranet/templates *
+recursive-include RaspPIPyIntranet/static *
