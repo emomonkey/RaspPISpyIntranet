@@ -89,6 +89,7 @@ class SetupConfig:
     self.mailer_username = p_mail_username
     self.mailer_password = p_mail_password
     
+    
 
 
 def sendemail(filenm, emailtext):
@@ -99,13 +100,10 @@ def sendemail(filenm, emailtext):
            recipients=
                [cfgSetup.mailer_username])
     msg.body = emailtext
-    print('attach')
-    print()
     with app.open_resource(filenm) as fp:
         msg.attach(fp, "image/jpg", fp.read())
     with app.app_context():    
         mail.send(msg)
-    print('message sent')
     return "Sent"
 
 
@@ -169,12 +167,11 @@ def calculatesnaps() :
     sendtime = int('%s%s' % (cfgSetup.endhr, cfgSetup.endmin))
     
     icnt = 0
-
     while icnt < cfgSetup.photo_freq:
         smin = random.randint(1,60)
         shr = random.randint(1,24)
         sval = int('%d%02d' % (shr,smin))
-        if (sval >= sstarttime and sval < sendtime) or (sstarttime == 0 and sendtime == 0):
+	if (sval >= sstarttime and sval < sendtime) or (sstarttime == 0 and sendtime == 0):
             if sval not in cfgSetup.lsttime: 
                 cfgSetup.lsttime.append(sval)
                 icnt = icnt + 1
@@ -242,11 +239,8 @@ def takecamera(bAlarm):
             df = datetime.datetime.today().strftime("%Y%m%d")
             sfolder = 'RaspPIPyIntranet/static/images/SnapView/%s' % df
             sfilename = 'image%s.jpg' % d
-            print sfolder
             if not os.path.isdir(sfolder):
                 os.makedirs(sfolder)
-                print("makedir")
-                print sfolder
             if cfgSetup.cam_mode == 'usb':
                 output = subprocess.Popen(['fswebcam', '-d', '/dev/video0', '-r', '640x480', '%s/%s' % (sfolder,sfilename)], stdout=subprocess.PIPE, 
                                        stderr=subprocess.PIPE)
@@ -256,9 +250,7 @@ def takecamera(bAlarm):
                 output = subprocess.Popen([cfgSetup.customcmd, '%s/%s' % (sfolder,sfilename)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = output.communicate()
             time_stamp = time_now
-            print "insertdb"
             insert_db(bAlarm)
-            print "after insertdb"
             sfolder = 'static/images/SnapView/%s' % df
             sfolderfile = '%s/%s' % (sfolder,sfilename)
             if cfgSetup.alarm_mode and bAlarm == True:
@@ -297,7 +289,6 @@ def setup_app(configfile=None):
     global pageno
     global nopage
     global cfgSetup 
-   
     logging.basicConfig()
     pageno = 1
     nopage = 4
@@ -307,7 +298,7 @@ def setup_app(configfile=None):
     GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  # Set our input pin to be an input
     GPIO.add_event_detect(17, GPIO.RISING, inputRising)
     init_db()
-    # get setup    
+    # get setup     
     with app.app_context():
         db = get_db()
         cur=db.cursor()
@@ -317,10 +308,10 @@ def setup_app(configfile=None):
         send=""
         sstart = recsetup[6]
         send = recsetup[7]
-        cfgSetup = SetupConfig(recsetup[0],recsetup[1], recsetup[2], recsetup[3], recsetup[4], recsetup[5], sstart[1:2],sstart[4:5], send[1:2], send[4:5], recsetup[8], recsetup[9],recsetup[10],recsetup[11],recsetup[12])
-        if cfgSetup.alarm_mode == 1:
-               calculatesnaps();
-
+	cfgSetup = SetupConfig(recsetup[0],recsetup[1], recsetup[2], recsetup[3], recsetup[4], recsetup[5], sstart[0:2],sstart[3:5], send[0:2], send[3:5], recsetup[8], recsetup[9],recsetup[10],recsetup[11],recsetup[12])
+        if cfgSetup.random_mode == 1:
+                calculatesnaps()
+		
         bval = False
         if cfgSetup.mailer_use_ssl == "True":
             bval = True
@@ -451,3 +442,4 @@ with app.app_context():
     sched = Scheduler()
     sched.add_interval_job(autoshot, seconds = 60)
     sched.start()
+    
